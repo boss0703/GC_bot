@@ -15,7 +15,6 @@ pycparser==2.20
 pyOpenSSL==20.0.1
 PySocks==1.7.1
 requests==2.25.1
-setuptools==52.0.0.post20210125
 six==1.16.0
 soupsieve==2.2.1
 typing-extensions==3.10.0.0
