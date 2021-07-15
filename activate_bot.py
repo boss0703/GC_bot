@@ -1,5 +1,8 @@
+from datetime import datetime
 import discord
+from discord.ext import tasks
 # from local_settings import TOKEN
+from config import TEST_CHANNEL_ID
 from settings import TOKEN
 from scrape import game_news, fx_news, fx_info, baby_news
 
@@ -48,7 +51,7 @@ async def on_message(message):
     # メッセージが「/babynews」の場合
     if message.content == '/babynews':
         res = baby_news()
-        embed = discord.Embed(title="赤ちゃんニュース", description=res)
+        embed = discord.Embed(title="育児ニュース", description=res)
         await message.channel.send(embed=embed)
 
     # テスト用
@@ -61,5 +64,20 @@ async def on_message(message):
     if client.user in message.mentions:
         await message.channel.send(f'{message.author.mention}')
 
+
+# 定期実行
+@tasks.loop(seconds=60)
+async def periodically():
+    now = datetime.now().strftime('%H:%M')
+    print(now)
+    if now == '23:00':
+        res = baby_news()
+        embed = discord.Embed(title="育児ニュース", description=res)
+        channel = client.get_channel(TEST_CHANNEL_ID)
+        await channel.send(embed=embed)
+
+
+# 定期実行スクリプト
+periodically.start()
 # Botの起動とDiscordサーバーへの接続
 client.run(TOKEN)
