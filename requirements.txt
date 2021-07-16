@@ -9,7 +9,7 @@ chardet==4.0.0
 cryptography==3.4.7
 discord.py==1.7.3
 idna==2.10
-mecab==0.996.3
+mecab
 mecab-python3==1.0.4
 multidict==5.1.0
 pip==21.1.3
