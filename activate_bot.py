@@ -1,4 +1,6 @@
 from datetime import datetime
+
+import MeCab
 import discord
 from discord.ext import tasks
 # from local_settings import TOKEN
@@ -53,6 +55,18 @@ async def on_message(message):
         res = baby_news()
         embed = discord.Embed(title="育児ニュース", description=res)
         await message.channel.send(embed=embed)
+
+
+    # メッセージが「/parse」から始まる場合
+    if str.startswith('/parse'):
+        split_message = message.content.split(' ')
+        if len(split_message) == 2:
+            mecab = MeCab.Tagger("-Ochasen")
+            await message.channel.send(mecab.parse(split_message[1]))
+        else:
+            await message.channel.send("書式エラー：「/parse 〇〇」")
+
+
 
     # テスト用
     if message.content == '/test':
