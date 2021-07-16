@@ -58,7 +58,7 @@ async def on_message(message):
 
 
     # メッセージが「/parse」から始まる場合
-    if str.startswith('/parse'):
+    if message.content.startswith('/parse'):
         split_message = message.content.split(' ')
         if len(split_message) == 2:
             mecab = MeCab.Tagger("-Ochasen")
