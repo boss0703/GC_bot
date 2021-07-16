@@ -61,7 +61,7 @@ async def on_message(message):
     if message.content.startswith('/parse'):
         split_message = message.content.split(' ')
         if len(split_message) == 2:
-            mecab = MeCab.Tagger("-Ochasen")
+            mecab = MeCab.Tagger()
             print("mecab:" + mecab.parse(split_message[1]))
             await message.channel.send(mecab.parse(split_message[1]))
         else:
