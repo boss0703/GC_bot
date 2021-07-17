@@ -2,6 +2,7 @@ from datetime import datetime
 
 import MeCab
 import discord
+from asari.api import Sonar
 from discord.ext import tasks
 # from local_settings import TOKEN
 from config import TEST_CHANNEL_ID
@@ -66,6 +67,18 @@ async def on_message(message):
             await message.channel.send(mecab.parse(split_message[1]))
         else:
             await message.channel.send("書式エラー：「/parse 〇〇」")
+
+    # メッセージが「/asari」から始まる場合
+    if message.content.startswith('/asari'):
+        split_message = message.content.split(' ')
+        if len(split_message) == 2:
+            sonar = Sonar()
+            resdict = sonar.ping(text=split_message[1])
+            confidence = [d.get('confidence') for d in res['classes'] if d.get('class_name') == res['top_class']][0]
+            result = '感情：' + resdict['top_class'] + '\n' + 'スコア：' + confidence
+            await message.channel.send(result)
+        else:
+            await message.channel.send("書式エラー：「/asari 〇〇」")
 
 
 
