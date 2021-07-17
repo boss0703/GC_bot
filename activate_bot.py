@@ -74,7 +74,7 @@ async def on_message(message):
         if len(split_message) == 2:
             sonar = Sonar()
             resdict = sonar.ping(text=split_message[1])
-            confidence = [d.get('confidence') for d in res['classes'] if d.get('class_name') == res['top_class']][0]
+            confidence = [d.get('confidence') for d in resdict['classes'] if d.get('class_name') == resdict['top_class']][0]
             result = '感情：' + resdict['top_class'] + '\n' + 'スコア：' + confidence
             await message.channel.send(result)
         else:
