@@ -97,12 +97,14 @@ async def on_message(message):
 @tasks.loop(seconds=60)
 async def periodically():
     now = datetime.now().strftime('%H:%M')
-    print(now)
-    if now == '23:00':
-        res = baby_news()
-        embed = discord.Embed(title="育児ニュース", description=res)
-        channel = client.get_channel(TEST_CHANNEL_ID)
-        await channel.send(embed=embed)
+    print('曜日：' + datetime.date().weekday() + ' 時間：' + now)
+    # 毎週月曜日の23:00に実行
+    if datetime.date().weekday() == 0:
+        if now == '23:00':
+            res = baby_news()
+            embed = discord.Embed(title="育児ニュース", description=res)
+            channel = client.get_channel(TEST_CHANNEL_ID)
+            await channel.send(embed=embed)
 
 
 # 定期実行スクリプト
