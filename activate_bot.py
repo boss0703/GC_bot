@@ -7,7 +7,7 @@ from discord.ext import tasks
 # from local_settings import TOKEN
 from config import TEST_CHANNEL_ID
 from settings import TOKEN
-from scrape import game_news, fx_news, fx_info, baby_news
+from scrape import epic_news, game_news, fx_news, fx_info, baby_news
 
 client = discord.Client()
 
@@ -80,7 +80,11 @@ async def on_message(message):
         else:
             await message.channel.send("書式エラー：「/asari 〇〇」")
 
-
+    # メッセージが「/epic」から始まる場合
+    if message.content.startswith('/epic'):
+        res = epic_news()
+        embed = discord.Embed(title="今週の無料ゲーム", description=res)
+        await message.channel.send(embed=embed)
 
     # テスト用
     if message.content == '/test':
@@ -106,6 +110,13 @@ async def periodically():
             channel = client.get_channel(TEST_CHANNEL_ID)
             await channel.send(embed=embed)
 
+    # 毎週金曜日の23:00に実行
+    if datetime.today().weekday() == 4:
+        if now == '23:00':
+            res = epic_news()
+            embed = discord.Embed(title="今週の無料ゲーム", description=res)
+            channel = client.get_channel(TEST_CHANNEL_ID)
+            await channel.send(embed=embed)
 
 # 定期実行スクリプト
 periodically.start()

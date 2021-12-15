@@ -4,6 +4,7 @@ FX_NEWS_URL = 'https://finance.yahoo.co.jp/'
 FX_INFO_URL = 'https://info.finance.yahoo.co.jp/fx/marketcalendar/'
 BABY_NEWS_URL = 'https://resemom.jp/special/926/recent/%E4%B9%B3%E5%B9%BC%E5%85%90'
 BABY_NEWS_URL_HEAD = 'https://resemom.jp/'
+EPIC_NEWS_URL = 'https://www.epicgames.com/store/ja/'
 
 GAME_NEWS_LIMIT = 10
 FX_NEWS_LIMIT = 10

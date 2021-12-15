@@ -3,7 +3,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-from config import GAME_NEWS_URL, GAME_NEWS_URL_HEAD, FX_NEWS_URL, FX_INFO_URL, BABY_NEWS_URL, BABY_NEWS_URL_HEAD, \
+from config import EPIC_NEWS_URL, GAME_NEWS_URL, GAME_NEWS_URL_HEAD, FX_NEWS_URL, FX_INFO_URL, BABY_NEWS_URL, BABY_NEWS_URL_HEAD, \
     BABY_NEWS_LIMIT, GAME_NEWS_LIMIT, FX_NEWS_LIMIT, FX_INFO_LIMIT
 
 
@@ -131,6 +131,18 @@ def baby_news():
     print('successfully baby news scraping')
     return res
 
+
+def epic_news():
+    session = requests.session()
+    response = session.get(EPIC_NEWS_URL)
+    bs = BeautifulSoup(response.text, 'html.parser')
+
+    bstitle = bs.select('#dieselReactWrapper > div > div.css-xxkdgb > main > div.css-1ktypff > div > div > div > span:nth-child(7) > div > div > section > div > div > div > div > a > div > div > div.css-hkjq8i > span.css-2ucwu > div')
+    res = ''
+    for s in bstitle:
+        res += '・' + s.text + '\n'
+    print('successfully epic news scraping')
+    return res
 
 if __name__ == "__main__":
     main()
