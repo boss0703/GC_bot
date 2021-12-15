@@ -138,6 +138,7 @@ def epic_news():
     bs = BeautifulSoup(response.text, 'html.parser')
 
     bstitle = bs.select('#dieselReactWrapper > div > div.css-xxkdgb > main > div.css-1ktypff > div > div > div > span:nth-child(7) > div > div > section > div > div > div > div > a > div > div > div.css-hkjq8i > span.css-2ucwu > div')
+    print(bstitle)
     res = ''
     for s in bstitle:
         res += '・' + s.text + '\n'
