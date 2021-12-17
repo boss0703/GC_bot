@@ -2,6 +2,9 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
+from selenium import webdriver
+import time
+import chromedriver_binary
 
 from config import EPIC_NEWS_URL, GAME_NEWS_URL, GAME_NEWS_URL_HEAD, FX_NEWS_URL, FX_INFO_URL, BABY_NEWS_URL, BABY_NEWS_URL_HEAD, \
     BABY_NEWS_LIMIT, GAME_NEWS_LIMIT, FX_NEWS_LIMIT, FX_INFO_LIMIT
@@ -133,11 +136,17 @@ def baby_news():
 
 
 def epic_news():
-    session = requests.session()
-    response = session.get(EPIC_NEWS_URL)
-    bs = BeautifulSoup(response.text, 'html.parser')
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    driver = webdriver.Chrome(options=options)
+    driver.get(EPIC_NEWS_URL)
+    time.sleep(1)
 
-    bstitle = bs.select('#dieselReactWrapper > div > div.css-xxkdgb > main > div.css-1ktypff > div > div > div > div > div:nth-child(2) > span > div > div > section > div > div:nth-child(n) > div > div > a > div > div > div.css-hkjq8i > span.css-2ucwu > div')
+    html = driver.page_source
+
+    bs = BeautifulSoup(html, 'html.parser')
+
+    bstitle = bs.select('main > div.css-1ktypff > div > div > div > div > div:nth-child(2) > span > div > div > section > div > div:not(:last-child) > div > div > a > div > div > div.css-hkjq8i > span.css-2ucwu > div')
     print(bstitle)
     res = ''
     for s in bstitle:
