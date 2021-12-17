@@ -151,6 +151,7 @@ def epic_news():
     res = ''
     for s in bstitle:
         res += '・' + s.text + '\n'
+    driver.quit()
     print('successfully epic news scraping')
     return res
 
